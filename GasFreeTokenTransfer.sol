@@ -20,15 +20,6 @@ contract GasFreeTokenTransfer
     function tokenReceived(address _from, uint256 _amount, bytes calldata _data) public returns (bytes4)
     {
         require(_data.length > 0);
-        /*
-        TxParams memory transaction = abi.decode(_data, (TxParams));
-
-        // Process fee payment.
-        IERC223(msg.sender).transfer(block.coinbase, transaction.fee, hex"000000");
-
-        // Process sending to destination.
-        IERC223(msg.sender).transfer(transaction.destination, _amount - transaction.fee, transaction.call_data);
-        */
         amount_received = _amount;
         (bool success, bytes memory _ret) = address(this).delegatecall(_data);
         delete(_ret);
